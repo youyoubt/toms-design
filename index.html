@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TOMS Docs Center</title>
+  <meta name="description" content="TOMS project documentation and preview">
+  <!-- Theme: Simple -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
+
+  <style>
+    .markdown-section iframe.preview-frame {
+      width: 100%;
+      min-height: 780px;
+      border: 1px solid #dcdfe6;
+      border-radius: 8px;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: "TOMS Docs",
+      repo: "",
+      homepage: "README.md",
+      loadSidebar: true,
+      subMaxLevel: 2,
+      auto2top: true,
+      alias: {
+        "/.*/_sidebar.md": "/_sidebar.md"
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+</body>
+</html>
