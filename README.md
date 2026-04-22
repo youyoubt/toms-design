@@ -7,7 +7,7 @@ Enterprise SaaS design system for payment terminal management consoles — built
 | File | Description |
 |------|-------------|
 | [DESIGN.md](./DESIGN.md) | Full design spec — colors, typography, components, layout, elevation |
-| [preview.html](https://youyoubt.github.io/toms-design/preview.html) | Visual LivePreview — all tokens and components rendered |
+| [preview.html](./preview.html) | Visual LivePreview — all tokens and components rendered |
 
 ---
 
@@ -15,8 +15,8 @@ Enterprise SaaS design system for payment terminal management consoles — built
 
 Provide both links as context when prompting AI tools:
 
-- **DESIGN.md**: `https://raw.githubusercontent.com/youyoubt/toms-design/main/DESIGN.md`
-- **Preview**: `https://youyoubt.github.io/toms-design/preview.html`
+- **DESIGN.md**: `https://github.com/youyoubt/toms-design/blob/main/DESIGN.md`
+- **Preview**: `https://github.com/youyoubt/toms-design/blob/main/DESIGN.md`
 
 ---
 
