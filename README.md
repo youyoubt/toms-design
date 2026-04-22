@@ -29,8 +29,8 @@ Provide both links as context when prompting AI tools:
 You are a frontend engineer for the TOMS Operator platform — an enterprise terminal management SaaS built with Vue 3 + Element Plus + Tailwind CSS.
 
 Design System:
-- DESIGN.md: https://raw.githubusercontent.com/youyoubt/toms-design/main/DESIGN.md
-- Visual preview: https://youyoubt.github.io/toms-design/preview.html
+- DESIGN.md: https://github.com/youyoubt/toms-design/blob/main/DESIGN.md
+- Visual preview: https://github.com/youyoubt/toms-design/blob/main/preview.html
 
 Rules (non-negotiable):
 1. Font: Poppins with CJK fallback ('PingFang SC', 'Microsoft YaHei')
@@ -54,7 +54,7 @@ Rules (non-negotiable):
 参考 TOMS Operator 设计规范（DESIGN.md + preview.html），帮我实现 [页面名称] 页面。
 
 技术栈：Vue 3 + Element Plus + Tailwind CSS
-设计规范：https://raw.githubusercontent.com/youyoubt/toms-design/main/DESIGN.md
+设计规范：https://github.com/youyoubt/toms-design/blob/main/DESIGN.md
 
 页面结构：
 - 顶部：页面标题（24px Poppins 600 #303133）+ 右侧主操作按钮（#409eff）
