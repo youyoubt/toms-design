@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOMS Operator — Design System Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --color-app-bg:       #f1f3f6;
+    --color-surface:      #ffffff;
+    --color-brand:        #003a8c;
+    --color-primary:      #409eff;
+    --color-primary-dark: #2c7be5;
+    --color-text-primary: #303133;
+    --color-text-menu:    #6e84a3;
+    --color-text-active:  #12263f;
+    --color-text-second:  #767676;
+    --color-text-label:   #677796;
+    --color-icon:         #b6c6dc;
+    --color-green:        #52c41a;
+    --color-orange:       #ff8d1a;
+    --color-danger:       #e9378f;
+    --color-warning:      #f6c556;
+    --color-disabled:     #a6a6a6;
+    --color-border:       #dcdfe6;
+    --color-border-card:  #dae0e8;
+    --color-divider:      #eef0f7;
+    --color-nav-active-bg: rgba(189,197,209,0.2);
+    --color-row-hover:    rgba(9,30,66,0.04);
+    --shadow-card: 0px 2px 4px -2px rgba(0,0,0,0.12), 0px 4px 8px 0px rgba(0,0,0,0.08), 0px 4px 16px 4px rgba(0,0,0,0.04);
+    --shadow-float: 0 1px 2px rgb(60 64 67/30%), 0 2px 6px 2px rgb(60 64 67/15%);
+    --font: 'Poppins', 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+  }
+
+  body {
+    font-family: var(--font);
+    background: var(--color-app-bg);
+    color: var(--color-text-primary);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── Page Header ── */
+  .page-header {
+    background: var(--color-brand);
+    color: #fff;
+    padding: 40px 48px 32px;
+  }
+  .page-header h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.3px; }
+  .page-header p  { font-size: 14px; margin-top: 6px; opacity: 0.75; }
+  .page-header .badge {
+    display: inline-block; margin-top: 12px;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 4px; padding: 3px 10px; font-size: 12px; font-weight: 500;
+  }
+
+  /* ── Layout ── */
+  .wrapper { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+  .section { margin-bottom: 56px; }
+  .section-title {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--color-text-menu);
+    margin-bottom: 20px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; }
+  .col { display: flex; flex-direction: column; gap: 12px; }
+
+  /* ── Card ── */
+  .card {
+    background: var(--color-surface);
+    border-radius: 8px;
+    box-shadow: var(--shadow-card);
+    padding: 20px;
+  }
+  .card-sm { padding: 14px 16px; border-radius: 4px; }
+  .card-title {
+    font-size: 13px; font-weight: 600; color: var(--color-text-menu);
+    margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  /* ── Colors ── */
+  .palette { display: flex; flex-wrap: wrap; gap: 10px; }
+  .swatch {
+    display: flex; flex-direction: column; align-items: center;
+    width: 88px;
+  }
+  .swatch-color {
+    width: 88px; height: 52px; border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.07);
+    margin-bottom: 6px;
+  }
+  .swatch-name  { font-size: 10px; font-weight: 600; color: var(--color-text-primary); text-align: center; }
+  .swatch-value { font-size: 10px; color: var(--color-text-menu); font-family: monospace; text-align: center; }
+
+  /* ── Typography ── */
+  .type-row { padding: 10px 0; border-bottom: 1px solid var(--color-divider); }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta { font-size: 11px; color: var(--color-text-menu); margin-top: 3px; }
+
+  /* ── Buttons ── */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font); font-weight: 500; cursor: pointer;
+    border: 1px solid transparent; transition: background 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--color-primary); color: #fff;
+    padding: 8px 20px; border-radius: 4px; font-size: 14px;
+  }
+  .btn-primary:hover { background: var(--color-primary-dark); }
+  .btn-default {
+    background: #fff; color: #606266;
+    border-color: var(--color-border);
+    padding: 8px 20px; border-radius: 4px; font-size: 14px;
+  }
+  .btn-default:hover { border-color: var(--color-primary); color: var(--color-primary); }
+  .btn-text {
+    background: transparent; color: var(--color-primary);
+    border: none; padding: 4px 8px; font-size: 14px;
+  }
+  .btn-danger {
+    background: var(--color-danger); color: #fff;
+    padding: 8px 20px; border-radius: 4px; font-size: 14px;
+  }
+  .btn-sm {
+    padding: 3px 13px; font-size: 13px; border-radius: 4px;
+    background: var(--color-primary); color: #fff; border: none;
+  }
+  .btn-circle {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #fff; border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-float);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 16px; cursor: pointer;
+  }
+  .btn-icon-label {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 14px; color: var(--color-primary);
+    background: transparent; border: none; cursor: pointer;
+  }
+
+  /* ── Status Pills ── */
+  .pill {
+    display: inline-flex; align-items: center;
+    padding: 2px 8px; border-radius: 3px;
+    font-size: 12px; font-weight: 500; color: #fff;
+    white-space: nowrap;
+  }
+  .pill-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    display: inline-block; margin-right: 5px;
+  }
+  .pill-active  { background: var(--color-green); }
+  .pill-warning { background: var(--color-orange); }
+  .pill-danger  { background: var(--color-danger); }
+  .pill-disabled{ background: var(--color-disabled); }
+  .pill-success-bg {
+    background: #e5f9f6; color: #6ad99f;
+    font-weight: 500; font-size: 12px;
+    padding: 2px 8px; border-radius: 3px;
+  }
+  .tag-count {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--color-primary); color: #fff;
+    font-size: 12px; font-weight: 500; border-radius: 15px;
+    padding: 2px 7px; min-width: 20px;
+  }
+
+  /* ── Table ── */
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th {
+    background: #f5f5f5; color: var(--color-text-primary);
+    font-weight: 600; font-size: 13px; text-align: left;
+    padding: 10px 10px; border-bottom: 1px solid var(--color-border);
+    border-top: 1px solid var(--color-border);
+  }
+  td {
+    padding: 8px 10px; color: var(--color-text-primary);
+    border-bottom: 1px solid var(--color-border);
+  }
+  tr:hover td { background: var(--color-row-hover); }
+  .td-muted { color: var(--color-text-second); font-size: 13px; }
+  .actions { display: flex; gap: 4px; }
+
+  /* ── Form ── */
+  .form-item { margin-bottom: 15px; }
+  .form-label {
+    font-size: 14px; font-weight: 400; color: #606266;
+    display: block; margin-bottom: 6px;
+  }
+  .form-input {
+    font-family: var(--font); font-size: 14px;
+    border: 1px solid var(--color-border); border-radius: 4px;
+    padding: 8px 12px; width: 200px; color: var(--color-text-primary);
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: var(--color-primary); }
+  .form-input.full { width: 100%; }
+  .form-select {
+    font-family: var(--font); font-size: 14px;
+    border: 1px solid var(--color-border); border-radius: 4px;
+    padding: 8px 32px 8px 12px; width: 200px;
+    color: var(--color-text-primary); background: #fff;
+    outline: none; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23909399' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 10px center;
+  }
+
+  /* ── Sidebar mock ── */
+  .sidebar-demo {
+    width: 220px; background: var(--color-surface);
+    border-right: 1px solid var(--color-divider);
+    border-radius: 8px; overflow: hidden;
+    box-shadow: var(--shadow-card);
+  }
+  .sidebar-header {
+    padding: 14px 16px; font-size: 13px; font-weight: 700;
+    color: var(--color-text-active); letter-spacing: -0.2px;
+    border-bottom: 1px solid var(--color-divider);
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 16px; font-size: 14px; color: var(--color-text-menu);
+    cursor: pointer; transition: background 0.15s;
+    border-left: 3px solid transparent;
+  }
+  .nav-item:hover { background: var(--color-row-hover); }
+  .nav-item.active {
+    background: var(--color-nav-active-bg);
+    color: var(--color-text-active); font-weight: 500;
+    border-left-color: var(--color-brand);
+  }
+  .nav-icon { font-size: 15px; color: var(--color-icon); }
+  .nav-item.active .nav-icon { color: var(--color-brand); }
+  .nav-divider { height: 1px; background: var(--color-divider); margin: 4px 0; }
+
+  /* ── Stat Card ── */
+  .stat-card {
+    background: var(--color-surface); border-radius: 8px;
+    box-shadow: var(--shadow-card); padding: 20px 24px;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; min-width: 140px; flex: 1;
+  }
+  .stat-number { font-size: 32px; font-weight: 700; color: var(--color-text-active); line-height: 35px; }
+  .stat-number-md { font-size: 24px; font-weight: 700; color: var(--color-text-active); }
+  .stat-label { font-size: 16px; font-weight: 400; color: var(--color-text-label); line-height: 17px; margin-top: 6px; }
+  .stat-delta { font-size: 12px; font-weight: 500; color: var(--color-green); margin-top: 4px; }
+
+  /* ── Step Indicator ── */
+  .steps { display: flex; align-items: center; gap: 0; }
+  .step-item { display: flex; align-items: center; }
+  .step-icon {
+    width: 32px; height: 32px; border-radius: 50%; border: 2px solid;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 600; flex-shrink: 0;
+  }
+  .step-icon.active { background: var(--color-brand); border-color: var(--color-brand); color: #fff; }
+  .step-icon.done   { background: #e6f0ff; border-color: var(--color-brand); color: var(--color-brand); }
+  .step-icon.wait   { background: #f0f0f0; border-color: #d9d9d9; color: var(--color-disabled); }
+  .step-icon.success{ background: var(--color-green); border-color: var(--color-green); color: #fff; }
+  .step-label { font-size: 12px; color: var(--color-text-menu); margin-top: 4px; text-align: center; }
+  .step-line { width: 60px; height: 1px; background: #f0f0f0; flex-shrink: 0; }
+  .step-wrap { display: flex; flex-direction: column; align-items: center; }
+
+  /* ── Pagination ── */
+  .pagination { display: flex; align-items: center; gap: 4px; }
+  .page-btn {
+    min-width: 28px; height: 28px; border-radius: 4px;
+    border: 1px solid var(--color-border); background: #fff;
+    font-family: var(--font); font-size: 13px; color: #606266;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; padding: 0 6px;
+  }
+  .page-btn.active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+  .page-btn:hover:not(.active) { border-color: var(--color-primary); color: var(--color-primary); }
+  .page-total { font-size: 13px; color: var(--color-text-primary); margin-left: 8px; }
+
+  /* ── Tooltip demo ── */
+  .tooltip-demo { position: relative; display: inline-block; }
+  .tooltip-box {
+    position: absolute; bottom: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%);
+    background: #303133; color: #fff; font-size: 12px;
+    padding: 6px 10px; border-radius: 4px; white-space: nowrap; pointer-events: none;
+  }
+  .tooltip-box::after {
+    content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    border: 5px solid transparent; border-top-color: #303133;
+  }
+
+  /* ── Divider ── */
+  .divider { height: 1px; background: var(--color-border); margin: 8px 0; }
+
+  /* ── Navbar mock ── */
+  .navbar-demo {
+    background: var(--color-surface); height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; border-radius: 8px; box-shadow: var(--shadow-card);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .navbar-brand { font-size: 16px; font-weight: 700; color: var(--color-brand); }
+  .navbar-breadcrumb { font-size: 13px; color: var(--color-text-menu); margin-left: 16px; }
+  .navbar-right { display: flex; align-items: center; gap: 12px; }
+  .avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--color-primary); color: #fff;
+    font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── Shell mock ── */
+  .shell-demo {
+    border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-card);
+    background: var(--color-app-bg); border: 1px solid var(--color-border);
+  }
+  .shell-navbar {
+    background: #fff; height: 50px; display: flex; align-items: center;
+    padding: 0 16px; border-bottom: 1px solid var(--color-border);
+    justify-content: space-between;
+  }
+  .shell-body { display: flex; min-height: 260px; }
+  .shell-sidebar {
+    width: 180px; background: #fff; border-right: 1px solid var(--color-divider);
+    padding: 8px 0; flex-shrink: 0;
+  }
+  .shell-content { flex: 1; padding: 16px; background: var(--color-app-bg); }
+  .shell-card {
+    background: #fff; border-radius: 8px; box-shadow: var(--shadow-card);
+    padding: 14px; height: 100%;
+  }
+  .shell-card-header {
+    font-size: 13px; font-weight: 600; color: var(--color-text-primary);
+    border-bottom: 1px solid var(--color-border-card); padding-bottom: 10px; margin-bottom: 10px;
+  }
+
+  .chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: #f0f2f5; border: 1px solid var(--color-border); border-radius: 3px;
+    padding: 2px 6px; font-size: 12px; color: var(--color-text-primary);
+  }
+  .chip-close { color: #909399; cursor: pointer; font-size: 11px; }
+
+  /* ── Elevation ── */
+  .elev-box {
+    background: #fff; border-radius: 8px; padding: 16px;
+    font-size: 12px; font-weight: 500; color: var(--color-text-menu);
+    text-align: center; min-width: 100px;
+  }
+
+  /* ── Overlay badges ── */
+  .overlay-success { background: rgba(51,195,186,0.29); padding: 6px 12px; border-radius: 4px; font-size: 13px; color: #00796b; }
+  .overlay-danger  { background: rgba(235,12,13,0.29);  padding: 6px 12px; border-radius: 4px; font-size: 13px; color: #c0392b; }
+</style>
+</head>
+<body>
+
+<!-- Page Header -->
+<div class="page-header">
+  <h1>TOMS Operator — Design System</h1>
+  <p>Terminal Operations Management System · Enterprise SaaS · Light-mode · Data-dense · CJK-ready</p>
+  <span class="badge">Vue 3 + Element Plus + Poppins</span>
+  <span class="badge" style="margin-left:6px">Use for: device management consoles, IoT dashboards, admin portals</span>
+</div>
+
+<div class="wrapper">
+
+  <!-- 1. COLOR PALETTE -->
+  <div class="section">
+    <div class="section-title">1 · Color Palette</div>
+    <div class="card">
+      <div class="card-title">Backgrounds & Surfaces</div>
+      <div class="palette">
+        <div class="swatch"><div class="swatch-color" style="background:#f1f3f6"></div><div class="swatch-name">App BG</div><div class="swatch-value">#f1f3f6</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#ffffff;border:1px solid #e0e0e0"></div><div class="swatch-name">Surface</div><div class="swatch-value">#ffffff</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#f5f5f5"></div><div class="swatch-name">Table Header</div><div class="swatch-value">#f5f5f5</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#1e1e1e"></div><div class="swatch-name">Code BG</div><div class="swatch-value">#1e1e1e</div></div>
+      </div>
+      <div class="divider" style="margin:16px 0"></div>
+      <div class="card-title">Brand & Interactive</div>
+      <div class="palette">
+        <div class="swatch"><div class="swatch-color" style="background:#003a8c"></div><div class="swatch-name">Brand Navy</div><div class="swatch-value">#003a8c</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#409eff"></div><div class="swatch-name">Primary</div><div class="swatch-value">#409eff</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#2c7be5"></div><div class="swatch-name">Primary Hover</div><div class="swatch-value">#2c7be5</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:rgba(64,158,255,0.3);border:1px dashed #409eff"></div><div class="swatch-name">Focus Ring</div><div class="swatch-value">rgba(64,158,255,.3)</div></div>
+      </div>
+      <div class="divider" style="margin:16px 0"></div>
+      <div class="card-title">Text</div>
+      <div class="palette">
+        <div class="swatch"><div class="swatch-color" style="background:#303133"></div><div class="swatch-name">Primary Text</div><div class="swatch-value">#303133</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#12263f"></div><div class="swatch-name">Active Nav</div><div class="swatch-value">#12263f</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#6e84a3"></div><div class="swatch-name">Menu Text</div><div class="swatch-value">#6e84a3</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#767676"></div><div class="swatch-name">Secondary</div><div class="swatch-value">#767676</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#677796"></div><div class="swatch-name">Label</div><div class="swatch-value">#677796</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#b6c6dc"></div><div class="swatch-name">Icon Default</div><div class="swatch-value">#b6c6dc</div></div>
+      </div>
+      <div class="divider" style="margin:16px 0"></div>
+      <div class="card-title">Status</div>
+      <div class="palette">
+        <div class="swatch"><div class="swatch-color" style="background:#52c41a"></div><div class="swatch-name">Active</div><div class="swatch-value">#52c41a</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#ff8d1a"></div><div class="swatch-name">Inactive</div><div class="swatch-value">#ff8d1a</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#e9378f"></div><div class="swatch-name">Danger</div><div class="swatch-value">#e9378f</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#f6c556"></div><div class="swatch-name">Warning</div><div class="swatch-value">#f6c556</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#a6a6a6"></div><div class="swatch-name">Disabled</div><div class="swatch-value">#a6a6a6</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#6ad99f"></div><div class="swatch-name">Success Text</div><div class="swatch-value">#6ad99f</div></div>
+      </div>
+      <div class="divider" style="margin:16px 0"></div>
+      <div class="card-title">Borders & Dividers</div>
+      <div class="palette">
+        <div class="swatch"><div class="swatch-color" style="background:#dcdfe6"></div><div class="swatch-name">Border Std</div><div class="swatch-value">#dcdfe6</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#dae0e8"></div><div class="swatch-name">Card Header</div><div class="swatch-value">#dae0e8</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#eef0f7"></div><div class="swatch-name">Sidebar Divider</div><div class="swatch-value">#eef0f7</div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#99a9bf"></div><div class="swatch-name">Scrollbar</div><div class="swatch-value">#99a9bf</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. TYPOGRAPHY -->
+  <div class="section">
+    <div class="section-title">2 · Typography — Poppins</div>
+    <div class="card">
+      <div class="type-row">
+        <div style="font-size:32px;font-weight:700;color:#12263f;line-height:35px">32px / 700 — Stat Number</div>
+        <div class="type-meta">32px · weight 700 · line-height 35px · use: KPI counts, key metrics</div>
+      </div>
+      <div class="type-row">
+        <div style="font-size:24px;font-weight:600;color:#303133;line-height:32px">24px / 600 — Page Title / Section Headline</div>
+        <div class="type-meta">24px · weight 600–700 · line-height 32px · use: module headings, dashboard titles</div>
+      </div>
+      <div class="type-row">
+        <div style="font-size:20px;font-weight:600;color:#303133">20px / 600 — Card Title / Dialog Title</div>
+        <div class="type-meta">20px · weight 600 · line-height 26px · use: card headers, dialog titles</div>
+      </div>
+      <div class="type-row">
+        <div style="font-size:16px;font-weight:500;color:#303133">16px / 500 — Body / Standard Label</div>
+        <div class="type-meta">16px · weight 400–500 · line-height 24px · use: form labels, card body</div>
+      </div>
+      <div class="type-row">
+        <div style="font-size:14px;font-weight:400;color:#303133">14px / 400 — Table Cell / Data (primary data size)</div>
+        <div class="type-meta">14px · weight 400 · line-height 22px · use: table rows, list items, metadata — THE data density standard</div>
+      </div>
+      <div class="type-row">
+        <div style="font-size:14px;font-weight:400;color:#6e84a3">14px / 400 — Sidebar Nav Link</div>
+        <div class="type-meta">14px · weight 400–500 · color #6e84a3 default, #12263f active</div>
+      </div>
+      <div class="type-row">
+        <div style="font-size:12px;font-weight:500;color:#303133">12px / 500 — Caption / Badge / Small Label</div>
+        <div class="type-meta">12px · weight 400–500 · line-height 20px · use: badges, timestamps, metadata</div>
+      </div>
+      <div class="type-row" style="border-bottom:none">
+        <div style="font-size:11px;font-weight:400;color:#767676">11px / 400 — Micro label</div>
+        <div class="type-meta">11px · minimum size · use: overline labels, count tooltips</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. BUTTONS -->
+  <div class="section">
+    <div class="section-title">3 · Buttons</div>
+    <div class="card">
+      <div class="row" style="align-items:center;flex-wrap:wrap;gap:16px">
+        <div class="col" style="gap:6px;align-items:flex-start">
+          <div class="card-title">Primary</div>
+          <button class="btn btn-primary">Primary Button</button>
+          <div style="font-size:11px;color:#677796">#409eff · 8px 20px · r:4px</div>
+        </div>
+        <div class="col" style="gap:6px;align-items:flex-start">
+          <div class="card-title">Default</div>
+          <button class="btn btn-default">Default Button</button>
+          <div style="font-size:11px;color:#677796">#fff + #dcdfe6 border · r:4px</div>
+        </div>
+        <div class="col" style="gap:6px;align-items:flex-start">
+          <div class="card-title">Danger</div>
+          <button class="btn btn-danger">Danger Button</button>
+          <div style="font-size:11px;color:#677796">#e9378f · r:4px</div>
+        </div>
+        <div class="col" style="gap:6px;align-items:flex-start">
+          <div class="card-title">Text</div>
+          <button class="btn btn-text">Text Button</button>
+          <div style="font-size:11px;color:#677796">transparent · table row actions</div>
+        </div>
+        <div class="col" style="gap:6px;align-items:flex-start">
+          <div class="card-title">Compact</div>
+          <button class="btn btn-sm">Search</button>
+          <div style="font-size:11px;color:#677796">3px 13px · filter bar</div>
+        </div>
+        <div class="col" style="gap:6px;align-items:flex-start">
+          <div class="card-title">Circle Float</div>
+          <button class="btn-circle">⊕</button>
+          <div style="font-size:11px;color:#677796">32×32 · 50% radius · map/float</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. STATUS BADGES -->
+  <div class="section">
+    <div class="section-title">4 · Status Badges & Tags</div>
+    <div class="card">
+      <div class="row" style="align-items:center;flex-wrap:wrap;gap:20px">
+        <div class="col" style="gap:8px">
+          <div class="card-title">Status Pills</div>
+          <div class="row" style="gap:8px;align-items:center">
+            <span class="pill pill-active">Active</span>
+            <span class="pill pill-warning">Inactive</span>
+            <span class="pill pill-danger">Error</span>
+            <span class="pill pill-disabled">Disabled</span>
+          </div>
+          <div style="font-size:11px;color:#677796">12px · weight 500 · 2px 8px · r:3px</div>
+        </div>
+        <div class="col" style="gap:8px">
+          <div class="card-title">Status Dots</div>
+          <div class="row" style="gap:12px;align-items:center">
+            <div style="display:flex;align-items:center;gap:5px">
+              <span class="pill-dot" style="background:#52c41a"></span>
+              <span style="font-size:13px">Online</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:5px">
+              <span class="pill-dot" style="background:#ff8d1a"></span>
+              <span style="font-size:13px">Offline</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:5px">
+              <span class="pill-dot" style="background:#e9378f"></span>
+              <span style="font-size:13px">Fault</span>
+            </div>
+          </div>
+        </div>
+        <div class="col" style="gap:8px">
+          <div class="card-title">Badge Variants</div>
+          <div class="row" style="gap:8px;align-items:center">
+            <span class="pill-success-bg">Success</span>
+            <span class="overlay-success">✓ Upload done</span>
+            <span class="overlay-danger">✕ Task failed</span>
+          </div>
+        </div>
+        <div class="col" style="gap:8px">
+          <div class="card-title">Tab Count</div>
+          <div class="row" style="gap:8px;align-items:center">
+            <span style="font-size:14px;color:#303133">All Terminals</span>
+            <span class="tag-count">128</span>
+            <span style="font-size:14px;color:#303133">Online</span>
+            <span class="tag-count" style="background:#52c41a">97</span>
+          </div>
+        </div>
+        <div class="col" style="gap:8px">
+          <div class="card-title">Multi-Select Chip</div>
+          <div class="row" style="gap:6px">
+            <span class="chip">Region A <span class="chip-close">✕</span></span>
+            <span class="chip">Model T800 <span class="chip-close">✕</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. DATA TABLE -->
+  <div class="section">
+    <div class="section-title">5 · Data Table</div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div style="padding:14px 20px;border-bottom:1px solid var(--color-border-card);display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:15px;font-weight:600;color:#303133">Terminal List</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input class="form-input" placeholder="Search TID..." style="width:160px;padding:5px 10px;font-size:13px">
+          <button class="btn btn-sm">Search</button>
+          <button class="btn btn-primary" style="padding:5px 14px;font-size:13px">+ Add</button>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>TID</th>
+            <th>Model</th>
+            <th>Merchant</th>
+            <th>Region</th>
+            <th>Status</th>
+            <th>Last Online</th>
+            <th style="text-align:right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:500">T8820001</td>
+            <td class="td-muted">N950</td>
+            <td>Sunrise Mart</td>
+            <td class="td-muted">East Asia</td>
+            <td><span class="pill pill-active">Active</span></td>
+            <td class="td-muted">2 mins ago</td>
+            <td style="text-align:right"><div class="actions" style="justify-content:flex-end"><button class="btn btn-text" style="font-size:13px">Detail</button><button class="btn btn-text" style="font-size:13px;color:#e9378f">Disable</button></div></td>
+          </tr>
+          <tr>
+            <td style="font-weight:500">T8820045</td>
+            <td class="td-muted">A8</td>
+            <td>Harbor Plaza</td>
+            <td class="td-muted">Southeast</td>
+            <td><span class="pill pill-warning">Inactive</span></td>
+            <td class="td-muted">3 days ago</td>
+            <td style="text-align:right"><div class="actions" style="justify-content:flex-end"><button class="btn btn-text" style="font-size:13px">Detail</button><button class="btn btn-text" style="font-size:13px">Enable</button></div></td>
+          </tr>
+          <tr>
+            <td style="font-weight:500">T8820102</td>
+            <td class="td-muted">N910</td>
+            <td>Metro Foods</td>
+            <td class="td-muted">Europe</td>
+            <td><span class="pill pill-danger">Error</span></td>
+            <td class="td-muted">1 hour ago</td>
+            <td style="text-align:right"><div class="actions" style="justify-content:flex-end"><button class="btn btn-text" style="font-size:13px">Detail</button><button class="btn btn-text" style="font-size:13px">Restart</button></div></td>
+          </tr>
+          <tr>
+            <td style="font-weight:500">T8820088</td>
+            <td class="td-muted">D2</td>
+            <td>City Express</td>
+            <td class="td-muted">Americas</td>
+            <td><span class="pill pill-disabled">Disabled</span></td>
+            <td class="td-muted">7 days ago</td>
+            <td style="text-align:right"><div class="actions" style="justify-content:flex-end"><button class="btn btn-text" style="font-size:13px">Detail</button></div></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="padding:12px 20px;display:flex;justify-content:flex-end;align-items:center;gap:8px;border-top:1px solid var(--color-border)">
+        <span class="page-total">Total 1,284 items</span>
+        <div class="pagination">
+          <button class="page-btn">‹</button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <button class="page-btn">…</button>
+          <button class="page-btn">64</button>
+          <button class="page-btn">›</button>
+        </div>
+        <select class="form-select" style="width:90px;font-size:13px;padding:4px 28px 4px 8px">
+          <option>20 / page</option>
+          <option>50 / page</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. FORM & INPUTS -->
+  <div class="section">
+    <div class="section-title">6 · Forms & Inputs</div>
+    <div class="row">
+      <div class="card" style="flex:1;min-width:300px">
+        <div class="card-title">Standard Form</div>
+        <div class="form-item">
+          <label class="form-label">Terminal ID</label>
+          <input class="form-input" placeholder="Enter TID" value="T8820001">
+        </div>
+        <div class="form-item">
+          <label class="form-label">Model</label>
+          <select class="form-select">
+            <option>N950</option><option>A8</option><option>N910</option>
+          </select>
+        </div>
+        <div class="form-item">
+          <label class="form-label">Region</label>
+          <select class="form-select">
+            <option>East Asia</option><option>Europe</option><option>Americas</option>
+          </select>
+        </div>
+        <div class="form-item" style="margin-bottom:0">
+          <label class="form-label">Remark</label>
+          <textarea class="form-input full" rows="3" placeholder="Optional note..." style="resize:vertical"></textarea>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:8px;justify-content:flex-end">
+          <button class="btn btn-default">Cancel</button>
+          <button class="btn btn-primary">Save</button>
+        </div>
+      </div>
+      <div class="col" style="gap:12px;flex:1;min-width:220px">
+        <div class="card card-sm">
+          <div class="card-title">Input States</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <input class="form-input" placeholder="Default state" style="width:100%">
+            <input class="form-input" placeholder="Focus state" style="width:100%;border-color:#409eff;box-shadow:0 0 0 2px rgba(64,158,255,0.2)">
+            <input class="form-input" placeholder="Disabled" style="width:100%;background:#f5f7fa;color:#c0c4cc;cursor:not-allowed" disabled>
+            <input class="form-input" placeholder="Error state" style="width:100%;border-color:#e9378f">
+          </div>
+        </div>
+        <div class="card card-sm">
+          <div class="card-title">Tooltip</div>
+          <div style="padding:24px 0 8px;display:flex;justify-content:center">
+            <div class="tooltip-demo">
+              <button class="btn btn-default" style="font-size:13px;padding:6px 14px">Hover me ▲</button>
+              <div class="tooltip-box">Terminal serial: SN-8820001-XZ</div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:#677796;margin-top:4px">#303133 bg · 12px · 6px 10px · r:4px</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. STAT CARDS -->
+  <div class="section">
+    <div class="section-title">7 · KPI / Stat Cards</div>
+    <div class="row">
+      <div class="stat-card">
+        <div class="stat-number">12,847</div>
+        <div class="stat-label">Total Terminals</div>
+        <div class="stat-delta">↑ 3.2% this week</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="color:#52c41a">11,203</div>
+        <div class="stat-label">Online Now</div>
+        <div class="stat-delta" style="color:#52c41a">87.2% uptime</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="color:#ff8d1a">1,321</div>
+        <div class="stat-label">Offline / Inactive</div>
+        <div class="stat-delta" style="color:#ff8d1a">↓ 12 since yesterday</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="color:#e9378f">323</div>
+        <div class="stat-label">Fault / Error</div>
+        <div class="stat-delta" style="color:#e9378f">Needs attention</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. SIDEBAR & NAV -->
+  <div class="section">
+    <div class="section-title">8 · Navigation & Sidebar</div>
+    <div class="row">
+      <div class="sidebar-demo">
+        <div class="sidebar-header">TOMS Operator</div>
+        <div class="nav-item active">
+          <span class="nav-icon">▦</span> Dashboard
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">⊟</span> Terminals
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">◫</span> Applications
+        </div>
+        <div class="nav-divider"></div>
+        <div class="nav-item">
+          <span class="nav-icon">⊙</span> Merchant
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">◎</span> Geo / Location
+        </div>
+        <div class="nav-divider"></div>
+        <div class="nav-item">
+          <span class="nav-icon">⊕</span> App Store
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">≡</span> Reports
+        </div>
+        <div class="nav-item">
+          <span class="nav-icon">⚙</span> Settings
+        </div>
+      </div>
+      <div class="col" style="flex:1;gap:12px">
+        <div class="card card-sm">
+          <div class="card-title">Navbar</div>
+          <div class="navbar-demo">
+            <div style="display:flex;align-items:center">
+              <div class="navbar-brand">TOMS</div>
+              <div class="navbar-breadcrumb">/ Dashboard / Terminal List</div>
+            </div>
+            <div class="navbar-right">
+              <span style="font-size:18px;color:#6e84a3;cursor:pointer">🔔</span>
+              <div class="avatar">OP</div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:#677796;margin-top:8px">60px height · #ffffff · fixed top · breadcrumb left · profile right</div>
+        </div>
+        <div class="card card-sm">
+          <div class="card-title">Step Indicator</div>
+          <div class="steps" style="gap:0;padding:8px 0">
+            <div class="step-wrap">
+              <div class="step-icon done">✓</div>
+              <div class="step-label">Select App</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step-wrap">
+              <div class="step-icon active">2</div>
+              <div class="step-label">Configure</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step-wrap">
+              <div class="step-icon wait">3</div>
+              <div class="step-label">Target</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step-wrap">
+              <div class="step-icon wait">4</div>
+              <div class="step-label">Confirm</div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:#677796;margin-top:4px">Done: #003a8c icon · Active: #003a8c fill · Wait: #d9d9d9 · 32×32px · 50% radius</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. ELEVATION -->
+  <div class="section">
+    <div class="section-title">9 · Depth & Elevation</div>
+    <div class="row" style="align-items:stretch">
+      <div class="elev-box" style="box-shadow:none;background:#f1f3f6;border:1px dashed #dcdfe6">
+        Level 0<br><span style="color:#a6a6a6;font-weight:400">Workspace BG<br>#f1f3f6</span>
+      </div>
+      <div class="elev-box" style="box-shadow:none;border:1px solid #dcdfe6">
+        Level 1<br><span style="color:#a6a6a6;font-weight:400">Sidebar / Navbar<br>No shadow</span>
+      </div>
+      <div class="elev-box" style="box-shadow:var(--shadow-card)">
+        Level 2<br><span style="color:#a6a6a6;font-weight:400">Standard Card<br>3-layer shadow</span>
+      </div>
+      <div class="elev-box" style="box-shadow:0 2px 4px rgb(126 142 177/12%)">
+        Level 2b<br><span style="color:#a6a6a6;font-weight:400">Card on Hover<br>cool tint</span>
+      </div>
+      <div class="elev-box" style="box-shadow:rgba(64,158,255,0.3) 0px 1px 2px, rgba(64,158,255,0.15) 0px 2px 6px 2px;border:1px solid rgba(64,158,255,0.3)">
+        Level 3<br><span style="color:#a6a6a6;font-weight:400">Active Card<br>blue glow</span>
+      </div>
+      <div class="elev-box" style="box-shadow:var(--shadow-float)">
+        Level 4<br><span style="color:#a6a6a6;font-weight:400">Float Control<br>Google shadow</span>
+      </div>
+      <div class="elev-box" style="box-shadow:0px 0px 12px rgba(0,0,0,0.12);border:1px solid #e4e7ed">
+        Level 5<br><span style="color:#a6a6a6;font-weight:400">Dropdown Panel<br>tooltip</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. PAGE SHELL -->
+  <div class="section">
+    <div class="section-title">10 · Page Shell</div>
+    <div class="shell-demo">
+      <div class="shell-navbar">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:14px;font-weight:700;color:#003a8c">TOMS</span>
+          <span style="font-size:12px;color:#6e84a3">/ Terminal List</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:15px;color:#6e84a3">🔔</span>
+          <div style="width:26px;height:26px;border-radius:50%;background:#409eff;color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center">OP</div>
+        </div>
+      </div>
+      <div class="shell-body">
+        <div class="shell-sidebar">
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:13px;font-weight:500;color:#12263f;background:rgba(189,197,209,0.2);border-left:3px solid #003a8c">
+            <span style="color:#003a8c;font-size:13px">▦</span> Dashboard
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:13px;color:#6e84a3">
+            <span style="font-size:13px">⊟</span> Terminals
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:13px;color:#6e84a3">
+            <span style="font-size:13px">◫</span> Applications
+          </div>
+          <div style="height:1px;background:#eef0f7;margin:4px 0"></div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:13px;color:#6e84a3">
+            <span style="font-size:13px">⊙</span> Merchant
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:13px;color:#6e84a3">
+            <span style="font-size:13px">≡</span> Reports
+          </div>
+        </div>
+        <div class="shell-content">
+          <div class="shell-card">
+            <div class="shell-card-header" style="display:flex;justify-content:space-between;align-items:center">
+              <span>Terminal List</span>
+              <button class="btn btn-primary" style="font-size:12px;padding:4px 12px">+ Add Terminal</button>
+            </div>
+            <div style="display:flex;gap:6px;margin-bottom:10px">
+              <input style="font-family:var(--font);font-size:12px;border:1px solid #dcdfe6;border-radius:4px;padding:4px 8px;color:#303133;outline:none;width:130px" placeholder="Search TID...">
+              <button class="btn btn-sm" style="font-size:12px">Search</button>
+            </div>
+            <table style="font-size:12px">
+              <thead>
+                <tr>
+                  <th style="font-size:11px;padding:6px 8px">TID</th>
+                  <th style="font-size:11px;padding:6px 8px">Model</th>
+                  <th style="font-size:11px;padding:6px 8px">Status</th>
+                  <th style="font-size:11px;padding:6px 8px;text-align:right">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td style="padding:5px 8px;font-weight:500">T8820001</td><td style="padding:5px 8px;color:#767676">N950</td><td style="padding:5px 8px"><span class="pill pill-active" style="font-size:10px;padding:1px 6px">Active</span></td><td style="padding:5px 8px;text-align:right"><span style="color:#409eff;font-size:12px;cursor:pointer">Detail</span></td></tr>
+                <tr><td style="padding:5px 8px;font-weight:500">T8820045</td><td style="padding:5px 8px;color:#767676">A8</td><td style="padding:5px 8px"><span class="pill pill-warning" style="font-size:10px;padding:1px 6px">Offline</span></td><td style="padding:5px 8px;text-align:right"><span style="color:#409eff;font-size:12px;cursor:pointer">Detail</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:#677796;margin-top:8px">Navbar 60px · Sidebar 250px · Content #f1f3f6 · Cards #ffffff with 3-layer shadow</div>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align:center;font-size:12px;color:#b6c6dc;padding-top:20px;border-top:1px solid #eef0f7">
+    TOMS Operator Design System Preview · Light Mode · Based on Vue 3 + Element Plus + Poppins
+  </div>
+
+</div>
+</body>
+</html>
